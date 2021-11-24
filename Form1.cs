@@ -166,7 +166,21 @@ namespace korsunovwebchik
                 }
                 else
                 {
-                    MessageBox.Show("Ei saa aru, oled sa kindel?!", "Küsimus", MessageBoxButtons.YesNo);
+                    var answer2 = MessageBox.Show("Ei saa aru, oled sa kindel?!", "Küsimus", MessageBoxButtons.YesNo);
+                    if (answer2 == DialogResult.No)
+                    {
+                        string text = Interaction.InputBox("Sisesta siia mingi tekst", "InputBox", "Mingi tekst");
+                        if (MessageBox.Show("Kas tahad tekst saaada Tekskastisse?", "Teksti salvestamine", MessageBoxButtons.OKCancel) == DialogResult.OK)
+                        {
+                            lbl.Text = text;
+                            Controls.Add(lbl);
+                        }
+                    }
+                    else
+                    {
+                        lbl.Text = "Väga kahju!";
+                        Controls.Add(lbl);
+                    }
                 }
             }
         }
