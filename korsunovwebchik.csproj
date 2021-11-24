@@ -33,6 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -81,6 +82,7 @@
     <Content Include="Images\close_box_green.jpg" />
     <Content Include="Images\close_box_red.jpg" />
     <Content Include="Images\open_box_yellow.jpg" />
+    <Content Include="Images\vopros.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -16,6 +17,10 @@ namespace korsunovwebchik
         Button btn;
         Label lbl;
         PictureBox pb;
+        CheckBox cb_btn1, cb_btn2;
+        RadioButton rb;
+        public bool t = false;
+
         public Form1()
         {
             this.Height = 500;
@@ -28,11 +33,10 @@ namespace korsunovwebchik
             tn.Nodes.Add(new TreeNode("Nupp"));
             tn.Nodes.Add(new TreeNode("Silt"));
             tn.Nodes.Add(new TreeNode("PictureBox"));
-
-            tn.Nodes.Add(new TreeNode("Märkeruut-CheckBox"));
-            tn.Nodes.Add(new TreeNode("Radionupp-RadioButton"));
-            tn.Nodes.Add(new TreeNode("Tekstkast-TextBox"));
-            tn.Nodes.Add(new TreeNode("Kaart-TabControl"));
+            tn.Nodes.Add(new TreeNode("CheckBox"));
+            tn.Nodes.Add(new TreeNode("RadioButton"));
+            tn.Nodes.Add(new TreeNode("TextBox"));
+            tn.Nodes.Add(new TreeNode("TabControl"));
             tn.Nodes.Add(new TreeNode("Messagebox"));
 
             //nüpp
@@ -49,24 +53,53 @@ namespace korsunovwebchik
             lbl.Location = new Point(150, 0);
             lbl.MouseHover += Lbl_MouseHover;
             lbl.MouseLeave += Lbl_MouseLeave;
-
+            //PictureBox
             pb = new PictureBox();
-            pb.Size = new Size(50, 50);
+            pb.Size = new Size(300, 300);
             pb.Location = new Point(150, 60);
+            pb.DoubleClick += Pb_DoubleClick1;
             pb.SizeMode = PictureBoxSizeMode.StretchImage;
             pb.Image = Image.FromFile(@"..\..\Images\open_box_yellow.jpg");
-            pb.DoubleClick += Pb_DoubleClick;
+            pb.DoubleClick += Pb_DoubleClick1;
+            //CheckBox
+            cb_btn1 = new CheckBox();
+            cb_btn2 = new CheckBox();
+
+            cb_btn1.CheckedChanged += CB_btn_CheckedChanged;
+
+            cb_btn2.Left = 250;
+            cb_btn2.Top = 250;
+            cb_btn2.Width = 150;
+            cb_btn2.Height = 50;
+
+            cb_btn2.Image = Image.FromFile(@"..\..\Images\vopros.jpg");
+            cb_btn2.Location = new Point(300, 350);
+
+            cb_btn1.Left = 200;
+            cb_btn1.Top = 200;
+            cb_btn1.Width = 150;
+            cb_btn1.Height = 50;
+
+            cb_btn1.BackColor = Color.Orange;
+            cb_btn1.ForeColor = Color.Black;
+            cb_btn1.Text = "Hello";
+            cb_btn2.Text = "Tere";
+            cb_btn1.Font = new Font("Georgia", 12);
 
             tree.Nodes.Add(tn);
             this.Controls.Add(tree);
 
         }
-        private void Pb_DoubleClick(object sender, EventArgs e)
+        int click = 0;
+
+        private void Pb_DoubleClick1(object sender, EventArgs e)
         {
             //Double_Click -> carusel (3-4 images) 1-2-3-4|1-2-3-4...
-            pb.Image = Image.FromFile(@"..\Images\close_box_blue.jpg");
-            pb.Image = Image.FromFile(@"..\Images\close_box_green.jpg");
-            pb.Image = Image.FromFile(@"..\Images\close_box_red.jpg");
+            string[] images = { "close_box_blue.jpg", "close_box_green.jpg", "close_box_red.jpg" };
+            string fail = images[click];
+            pb.Image = Image.FromFile(@"..\..\Images\" + fail);
+            click++;
+            if (click == 3) { click = 0; }
         }
         private void Lbl_MouseHover(object sender, EventArgs e)
         {
@@ -92,7 +125,65 @@ namespace korsunovwebchik
             }
             else if (e.Node.Text == "PictureBox")
             {
+                this.Controls.Add(pb);
+                
+            }
+            else if(e.Node.Text == "CheckBox")
+            {
+                cb_btn1 = new CheckBox();
+                cb_btn1.Text = "Vali mind";
+                cb_btn1.Location = new Point(300, 300);
+                cb_btn2 = new CheckBox();
+                cb_btn2.Text = "Vali mind";
+                cb_btn2.Size = new Size(100, 100);
 
+                cb_btn2.Image = Image.FromFile(@"..\..\Images\open_box_yellow.jpg");
+                cb_btn2.Location = new Point(300, 350);
+                this.Controls.Add(cb_btn1);
+                this.Controls.Add(cb_btn2);
+            }
+            else if (e.Node.Text == "RadioButton")
+            {
+                this.Controls.Add(rb);
+            }
+            else if (e.Node.Text == "Messagebox")
+            {
+                MessageBox.Show("MessageBox", "Kõige lihtsam aken");
+                var answer = MessageBox.Show("Tahad InputBoxi näha?", "Aken koos nupudega", MessageBoxButtons.YesNo);
+                if (answer == DialogResult.Yes)
+                {
+                    string text = Interaction.InputBox("Sisesta siia mingi tekst", "InputBox", "Mingi tekst");
+                    if(MessageBox.Show("Kas tahad tekst saaada Tekskastisse?", "Teksti salvestamine", MessageBoxButtons.OKCancel) == DialogResult.OK)
+                    {
+                        lbl.Text = text;
+                        Controls.Add(lbl);
+                    }
+                    else
+                    {
+                        lbl.Text = "Siis head aega, mu vend!";
+                        Controls.Add(lbl);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Ei saa aru, oled sa kindel?!", "Küsimus", MessageBoxButtons.YesNo);
+                }
+            }
+        }
+        private void CB_btn_CheckedChanged(object sender, EventArgs e)
+        {
+            if (t)
+            {
+                this.Size = new Size(1000, 1000);
+                pb.BorderStyle = BorderStyle.Fixed3D;
+                cb_btn2.Text = "Teeme väiksem suurus";
+                t = false;
+            }
+            else
+            {
+                this.Size = new Size(700, 500);
+                cb_btn1.Text = "Suurendame";
+                t = true;
             }
         }
     }
