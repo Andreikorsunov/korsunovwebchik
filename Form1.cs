@@ -18,7 +18,7 @@ namespace korsunovwebchik
         Label lbl;
         PictureBox pb;
         CheckBox cb_btn1, cb_btn2;
-        RadioButton rb;
+        RadioButton rb_btn1, rb_btn2;
         public bool t = false;
 
         public Form1()
@@ -144,7 +144,17 @@ namespace korsunovwebchik
             }
             else if (e.Node.Text == "RadioButton")
             {
-                this.Controls.Add(rb);
+                rb_btn1 = new RadioButton();
+                rb_btn1.Text = "Must teema";
+                rb_btn1.Location = new Point(300, 150);
+                rb_btn2 = new RadioButton();
+                rb_btn2.Text = "Valge teema";
+                rb_btn2.Location = new Point(300, 200);
+                this.Controls.Add(rb_btn1);
+                this.Controls.Add(rb_btn2);
+                rb_btn1.CheckedChanged += new EventHandler(rb_btn_Checked);
+                rb_btn2.CheckedChanged += new EventHandler(rb_btn_Checked);
+
             }
             else if (e.Node.Text == "Messagebox")
             {
@@ -182,6 +192,58 @@ namespace korsunovwebchik
                         Controls.Add(lbl);
                     }
                 }
+            }
+            else if (e.Node.Text == "TabControl")
+            {
+                TabControl tabC = new TabControl();
+                tabC.Location = new Point(450, 50);
+                tabC.Size = new Size(200, 100);
+                TabPage tabP1 = new TabPage("TTHK");
+                WebBrowser wb = new WebBrowser();
+                wb.Url = new Uri("https://www.tthk.ee/");
+                tabP1.Controls.Add(wb);
+                TabPage tabP2 = new TabPage("Teine");
+
+                TabPage tabP3 = new TabPage("Kolmas");
+                tabP3.DoubleClick += TabP3_DoubleClick;
+                tabC.Controls.Add(tabP1);
+                tabC.Controls.Add(tabP2);
+                tabC.Controls.Add(tabP3);
+                this.Controls.Add(tabC);
+                tabC.Selected += TabC_Selected;
+                tabC.DoubleClick += TabC_DoubleClick;
+            }
+        }
+        private void TabP3_DoubleClick(object sender, EventArgs e)
+        {
+            string title = "tabP" + (tabC.TabCount + 1).ToString();
+            TabPage tb = new TabPage(title);
+            tabC.TabPages.Add(tb);
+        }
+        private void TabC_DoubleClick(object sender, EventArgs e)
+        {
+            string title = "tabP" + (tabC.TabCount + 1).ToString();
+            TabPage tb = new TabPage(title);
+            tabC.TabPages.Add(tb);
+        }
+        private void TabC_Selected(object sender, EventArgs e)
+        {
+            //this.tabC.TabPages.Clear();
+            this.tabC.TabPages.Remove(tabC.SelectedTab);
+        }
+        private void rb_btn_Checked(object sender, EventArgs e)
+        {
+            if (rb_btn1.Checked)
+            {
+                this.BackColor = Color.Black;
+                rb_btn2.ForeColor = Color.White;
+                rb_btn1.ForeColor = Color.White;
+            }
+            else if (rb_btn2.Checked)
+            {
+                this.BackColor = Color.White;
+                rb_btn2.ForeColor = Color.Black;
+                rb_btn1.ForeColor = Color.Black;
             }
         }
         private void CB_btn_CheckedChanged(object sender, EventArgs e)
