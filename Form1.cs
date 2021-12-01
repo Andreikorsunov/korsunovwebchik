@@ -19,6 +19,11 @@ namespace korsunovwebchik
         PictureBox pb;
         CheckBox cb_btn1, cb_btn2;
         RadioButton rb_btn1, rb_btn2;
+        ListBox lb;
+        DataGridView dg;
+        TabControl tabC;
+
+
         public bool t = false;
 
         public Form1()
@@ -38,57 +43,12 @@ namespace korsunovwebchik
             tn.Nodes.Add(new TreeNode("TextBox"));
             tn.Nodes.Add(new TreeNode("TabControl"));
             tn.Nodes.Add(new TreeNode("Messagebox"));
-
-            //nüpp
-            btn = new Button();
-            btn.Text = "Vajuta siia";
-            btn.Location = new Point(100, 50);
-            btn.Height = 30;
-            btn.Width = 100;
-            btn.Click += Btn_Click;
-            //pealkiri
-            lbl = new Label();
-            lbl.Text = "Elementide loomine c# abil";
-            lbl.Size = new Size(600, 30);
-            lbl.Location = new Point(150, 0);
-            lbl.MouseHover += Lbl_MouseHover;
-            lbl.MouseLeave += Lbl_MouseLeave;
-            //PictureBox
-            pb = new PictureBox();
-            pb.Size = new Size(300, 300);
-            pb.Location = new Point(150, 60);
-            pb.DoubleClick += Pb_DoubleClick1;
-            pb.SizeMode = PictureBoxSizeMode.StretchImage;
-            pb.Image = Image.FromFile(@"..\..\Images\open_box_yellow.jpg");
-            pb.DoubleClick += Pb_DoubleClick1;
-            //CheckBox
-            cb_btn1 = new CheckBox();
-            cb_btn2 = new CheckBox();
-
-            cb_btn1.CheckedChanged += CB_btn_CheckedChanged;
-
-            cb_btn2.Left = 250;
-            cb_btn2.Top = 250;
-            cb_btn2.Width = 150;
-            cb_btn2.Height = 50;
-
-            cb_btn2.Image = Image.FromFile(@"..\..\Images\vopros.jpg");
-            cb_btn2.Location = new Point(300, 350);
-
-            cb_btn1.Left = 200;
-            cb_btn1.Top = 200;
-            cb_btn1.Width = 150;
-            cb_btn1.Height = 50;
-
-            cb_btn1.BackColor = Color.Orange;
-            cb_btn1.ForeColor = Color.Black;
-            cb_btn1.Text = "Hello";
-            cb_btn2.Text = "Tere";
-            cb_btn1.Font = new Font("Georgia", 12);
+            tn.Nodes.Add(new TreeNode("ListBox"));
+            tn.Nodes.Add(new TreeNode("DataGridView"));
+            tn.Nodes.Add(new TreeNode("MainMenu"));
 
             tree.Nodes.Add(tn);
             this.Controls.Add(tree);
-
         }
         int click = 0;
 
@@ -117,28 +77,54 @@ namespace korsunovwebchik
         {
             if (e.Node.Text=="Nupp")
             {
+                btn = new Button();
+                btn.Text = "Vajuta siia";
+                btn.Location = new Point(150, 25);
+                btn.Height = 30;
+                btn.Width = 100;
+                btn.Click += Btn_Click;
                 this.Controls.Add(btn);
             }
             else if (e.Node.Text=="Silt")
             {
+                lbl = new Label();
+                lbl.Text = "Elementide loomine c# abil";
+                lbl.Size = new Size(600, 30);
+                lbl.Location = new Point(150, 0);
+                lbl.MouseHover += Lbl_MouseHover;
+                lbl.MouseLeave += Lbl_MouseLeave;
                 this.Controls.Add(lbl);
             }
             else if (e.Node.Text == "PictureBox")
             {
+                pb = new PictureBox();
+                pb.Size = new Size(200, 200);
+                pb.Location = new Point(250, 60);
+                pb.DoubleClick += Pb_DoubleClick1;
+                pb.SizeMode = PictureBoxSizeMode.StretchImage;
+                pb.Image = Image.FromFile(@"..\..\Images\open_box_yellow.jpg");
+                pb.DoubleClick += Pb_DoubleClick1;
                 this.Controls.Add(pb);
-                
             }
             else if(e.Node.Text == "CheckBox")
             {
                 cb_btn1 = new CheckBox();
-                cb_btn1.Text = "Vali mind";
-                cb_btn1.Location = new Point(300, 300);
+                cb_btn1.Location = new Point(400, 270);
                 cb_btn2 = new CheckBox();
-                cb_btn2.Text = "Vali mind";
-                cb_btn2.Size = new Size(100, 100);
+                cb_btn2.Size = new Size(90, 90);
+                cb_btn1.Size = new Size(90, 90);
+                cb_btn2.Location = new Point(400, 350);
 
-                cb_btn2.Image = Image.FromFile(@"..\..\Images\open_box_yellow.jpg");
-                cb_btn2.Location = new Point(300, 350);
+                cb_btn1.CheckedChanged += CB_btn_CheckedChanged;
+
+                cb_btn2.Image = Image.FromFile(@"..\..\Images\vopros.jpg");
+
+                cb_btn1.BackColor = Color.Orange;
+                cb_btn1.ForeColor = Color.Black;
+                cb_btn1.Text = "Suurem";
+                cb_btn2.Text = "Väiksem";
+                cb_btn1.Font = new Font("Georgia", 12);
+
                 this.Controls.Add(cb_btn1);
                 this.Controls.Add(cb_btn2);
             }
@@ -146,15 +132,14 @@ namespace korsunovwebchik
             {
                 rb_btn1 = new RadioButton();
                 rb_btn1.Text = "Must teema";
-                rb_btn1.Location = new Point(300, 150);
+                rb_btn1.Location = new Point(600, 150);
                 rb_btn2 = new RadioButton();
                 rb_btn2.Text = "Valge teema";
-                rb_btn2.Location = new Point(300, 200);
+                rb_btn2.Location = new Point(600, 200);
                 this.Controls.Add(rb_btn1);
                 this.Controls.Add(rb_btn2);
                 rb_btn1.CheckedChanged += new EventHandler(rb_btn_Checked);
                 rb_btn2.CheckedChanged += new EventHandler(rb_btn_Checked);
-
             }
             else if (e.Node.Text == "Messagebox")
             {
@@ -193,10 +178,36 @@ namespace korsunovwebchik
                     }
                 }
             }
+            else if (e.Node.Text == "ListBox")
+            {
+                lb = new ListBox();
+                lb.Items.Add("Roheline");
+                lb.Items.Add("Punane");
+                lb.Items.Add("Kollane");
+                lb.Items.Add("Sinine");
+                lb.Items.Add("Hall");
+                lb.Location = new Point(120, 120);
+                lb.SelectedIndexChanged +=new EventHandler(lb_SelectedIndexChanged);
+                this.Controls.Add(lb);
+            }
+            else if (e.Node.Text == "DataGridView")
+            {
+                DataSet ds = new DataSet("XML fail. Menüü");
+                ds.ReadXml(@"..\..\Images\menu.xml");
+                dg = new DataGridView();
+                dg.Width = 200;
+                dg.Height = 260;
+                dg.Location = new Point(100, 280);
+                dg.AutoGenerateColumns = true;
+                dg.DataSource = ds;
+                dg.DataMember = "food";
+
+                this.Controls.Add(dg);
+            }
             else if (e.Node.Text == "TabControl")
             {
-                TabControl tabC = new TabControl();
-                tabC.Location = new Point(450, 50);
+                tabC = new TabControl();
+                tabC.Location = new Point(550, 30);
                 tabC.Size = new Size(200, 100);
                 TabPage tabP1 = new TabPage("TTHK");
                 WebBrowser wb = new WebBrowser();
@@ -213,15 +224,51 @@ namespace korsunovwebchik
                 tabC.Selected += TabC_Selected;
                 tabC.DoubleClick += TabC_DoubleClick;
             }
+            else if (e.Node.Text == "MainMenu")
+            {
+                MainMenu menu = new MainMenu();
+                MenuItem menuFile = new MenuItem("File");
+                menuFile.MenuItems.Add("Exit", new EventHandler(menuFile_Exit_Select));
+                menuFile.MenuItems.Add("Clear", new EventHandler(menuFile_Clear_Select));
+                menu.MenuItems.Add(menuFile);
+                this.Menu = menu;
+            }
         }
+        private void menuFile_Clear_Select(object sender, EventArgs e)
+        {
+            lb.Dispose();
+            dg.Dispose();
+            btn.Dispose();
+            lbl.Dispose();
+            tabC.Dispose();
+            pb.Dispose();
+            cb_btn1.Dispose();
+            cb_btn2.Dispose();
+            rb_btn1.Dispose();
+            rb_btn2.Dispose();
+
+        }
+
+        private void menuFile_Exit_Select(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void lb_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //pass
+        }
+
         private void TabP3_DoubleClick(object sender, EventArgs e)
         {
+            TabControl tabC = new TabControl();
             string title = "tabP" + (tabC.TabCount + 1).ToString();
             TabPage tb = new TabPage(title);
             tabC.TabPages.Add(tb);
         }
         private void TabC_DoubleClick(object sender, EventArgs e)
         {
+            TabControl tabC = new TabControl();
             string title = "tabP" + (tabC.TabCount + 1).ToString();
             TabPage tb = new TabPage(title);
             tabC.TabPages.Add(tb);
@@ -229,7 +276,7 @@ namespace korsunovwebchik
         private void TabC_Selected(object sender, EventArgs e)
         {
             //this.tabC.TabPages.Clear();
-            this.tabC.TabPages.Remove(tabC.SelectedTab);
+            //this.tabC.TabPages.Remove(tabC.SelectedTab);
         }
         private void rb_btn_Checked(object sender, EventArgs e)
         {
@@ -250,14 +297,14 @@ namespace korsunovwebchik
         {
             if (t)
             {
-                this.Size = new Size(1000, 1000);
+                this.Size = new Size(1100, 1100);
                 pb.BorderStyle = BorderStyle.Fixed3D;
                 cb_btn2.Text = "Teeme väiksem suurus";
                 t = false;
             }
             else
             {
-                this.Size = new Size(700, 500);
+                this.Size = new Size(400, 400);
                 cb_btn1.Text = "Suurendame";
                 t = true;
             }
